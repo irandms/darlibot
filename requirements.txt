@@ -1,0 +1,5 @@
+certifi==2018.4.16
+feedparser==5.2.1
+future==0.16.0
+python-telegram-bot==10.1.0
+telegram==0.0.1
