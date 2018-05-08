@@ -48,14 +48,20 @@ def watched(bot, update):
 def find_episode(bot, job):
     last_find_date = datetime.fromtimestamp(db["last_found_date"])
     timediff = datetime.now() - last_find_date
+
+    # Search for newest episode only if it's been more than 6 days since the last episode was found.
     if timediff.days >= 6:
+        # Get None or a magnet uri
         magnet_link = find_episode_helper("Darling", "http://horriblesubs.info/rss.php?res=1080")
+        # Found newest episode!
         if magnet_link is not None:
             db["last_found_date"] = time.mktime(datetime.now().timetuple())
             with open(db_filename, 'w') as dbfile:
                 json.dump(db, dbfile)
+            # Send update to chats, and reset their watched users list
             for chat_id in db:
                 if chat_id != 'last_found_date':
+                    db[chat_id] = []
                     bot.send_message(chat_id, text="HorribleSubs has uploaded the newest episode! Magnet link here: {}".format(magnet_link))
 
 # MAIN PROGRAM
