@@ -50,7 +50,7 @@ def find_episode(bot, job):
     timediff = datetime.now() - last_find_date
 
     # Search for newest episode only if it's been more than 6 days since the last episode was found.
-    if timediff.days >= 6:
+    if timediff.days >= 6 and timediff.seconds >= 75600:
         # Get None or a magnet uri
         magnet_link = find_episode_helper("Darling", "http://horriblesubs.info/rss.php?res=1080")
         # Found newest episode!
