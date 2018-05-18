@@ -56,13 +56,13 @@ def find_episode(bot, job):
         # Found newest episode!
         if magnet_link is not None:
             db["last_found_date"] = time.mktime(datetime.now().timetuple())
-            with open(db_filename, 'w') as dbfile:
-                json.dump(db, dbfile)
             # Send update to chats, and reset their watched users list
             for chat_id in db:
                 if chat_id != 'last_found_date':
                     db[chat_id] = []
                     bot.send_message(chat_id, text="HorribleSubs has uploaded the newest episode! Magnet link here: {}".format(magnet_link))
+            with open(db_filename, 'w') as dbfile:
+                json.dump(db, dbfile)
 
 # MAIN PROGRAM
 if "DARLIBOT_KEY" in os.environ:
